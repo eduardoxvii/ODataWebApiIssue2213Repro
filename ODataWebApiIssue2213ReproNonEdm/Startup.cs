@@ -49,20 +49,30 @@ namespace ODataWebApiIssue2213ReproNonEdm
             using (IServiceScope serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 InMemoryDbContext db = serviceScope.ServiceProvider.GetRequiredService<InMemoryDbContext>();
-
-                if (!db.Schools.Any())
+                Company company=null;
+                if (!db.Companies.Any())
                 {
-                    var shippingAddress = new StreetAddress { Id = 1, Street = "Street 1", City = "City 1" };
-                    db.StreetAddresses.Add(shippingAddress);
-
-                    var order = new Order { Id = 1, Description = "Order 1 Description " };
-                    db.Orders.Add(order);
-
-                    db.Schools.Add(new School { Id = 1, Name = "School 1", ShippingAddress = shippingAddress, Order = order });
+                    var shippingAddress = new StreetAddress { Id = 3, Street = "Company 2", City = "City 1" };
+                    db.Streetaddresses.Add(shippingAddress);
+                    company = new Company { Id = 2, Name = "Company 1", ManagerNage = "Blá Blá", StreetAddress = shippingAddress };
+                    db.Companies.Add(company);
 
                     db.SaveChanges();
                 }
 
+                if (!db.Schools.Any())
+                {
+                    var shippingAddress = new StreetAddress { Id = 1, Street = "Street 1", City = "City 1" };
+                    db.Streetaddresses.Add(shippingAddress);
+
+                    var order = new Order { Id = 1, Description = "Order 1 Description " };
+                    db.Orders.Add(order);
+
+                    db.Schools.Add(new School { Id = 1, Branch = company, Name = "School 1", StreetAddress = shippingAddress, Order = order });
+
+                    db.SaveChanges();
+                }
+                
                 if (!db.Users.Any())
                 {
                     db.Users.AddRange(
