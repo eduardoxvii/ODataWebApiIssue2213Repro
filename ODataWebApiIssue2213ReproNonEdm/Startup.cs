@@ -73,14 +73,14 @@ namespace ODataWebApiIssue2213ReproNonEdm
                     db.SaveChanges();
                 }
                 
-                if (!db.Users.Any())
+                /*if (!db.Users.Any())
                 {
                     db.Users.AddRange(
                         new User { Id = 1, Name = "John Doe", CreatedOn = new DateTimeOffset(DateTime.Parse("2020-06-24T15:57:44.3780001+03:00")) },
                         new User { Id = 2, Name = "Foo Bar", CreatedOn = new DateTimeOffset(DateTime.Now) });
 
                     db.SaveChanges();
-                }
+                }*/
             }
         }
     }
